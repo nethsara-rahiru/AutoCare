@@ -28,5 +28,12 @@
     "test": "jest --runInBand",
     "check": "expo install --check"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@testing-library/react-native": "^14.1.0",
+    "babel-preset-expo": "~58.0.0",
+    "jest": "^30.5.2",
+    "jest-expo": "^58.0.14",
+    "react-test-renderer": "^19.3.0"
+  }
 }
