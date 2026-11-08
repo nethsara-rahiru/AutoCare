@@ -28,10 +28,16 @@ export const migrations = [
   CREATE INDEX fuel_date ON fuel_logs(filled_at);`,
 ];
 export async function migrate(db) {
-  await db.execAsync('PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;');
-  const { user_version: version } = await db.getFirstAsync('PRAGMA user_version');
-  if (version > migrations.length) throw new Error('This database requires a newer AutoCare version.');
+  await db.execAsync("PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;");
+  const { user_version: version } = await db.getFirstAsync(
+    "PRAGMA user_version",
+  );
+  if (version > migrations.length)
+    throw new Error("This database requires a newer AutoCare version.");
   for (let i = version; i < migrations.length; i++) {
-    await db.withTransactionAsync(async () => { await db.execAsync(migrations[i]); await db.execAsync(`PRAGMA user_version = ${i + 1}`); });
+    await db.withTransactionAsync(async () => {
+      await db.execAsync(migrations[i]);
+      await db.execAsync(`PRAGMA user_version = ${i + 1}`);
+    });
   }
 }
