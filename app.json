@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "AutoCare", "slug": "autocare", "scheme": "autocare", "version": "1.0.0",
+    "orientation": "portrait", "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png", "android": {"package": "lk.autocare.tracker"},
+    "plugins": ["expo-router", "expo-sqlite", ["expo-image-picker", {"photosPermission": "Choose a vehicle photo for your offline garage.", "cameraPermission": false, "microphonePermission": false}]],
+    "experiments": {"typedRoutes": false}
+  }
+}
