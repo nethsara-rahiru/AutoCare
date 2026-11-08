@@ -26,14 +26,22 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --runInBand",
-    "check": "expo install --check"
+    "check": "expo install --check",
+    "lint": "node scripts/verify-source.cjs",
+    "format": "prettier --write app src __tests__ scripts/*.cjs *.js *.json .github/workflows/*.yml",
+    "format:check": "prettier --check app src __tests__ scripts/*.cjs *.js *.json .github/workflows/*.yml"
   },
   "private": true,
   "devDependencies": {
+    "@babel/parser": "^8.1.0",
     "@testing-library/react-native": "^14.1.0",
     "babel-preset-expo": "~58.0.0",
     "jest": "^30.5.2",
     "jest-expo": "^58.0.14",
+    "prettier": "^3.9.10",
     "react-test-renderer": "^19.3.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }
