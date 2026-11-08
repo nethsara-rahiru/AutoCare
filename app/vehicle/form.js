@@ -7,7 +7,7 @@ import { useApp } from '../../src/hooks/useApp';
 import { Screen, Field, Choices, Button, ErrorText, Empty } from '../../src/components/UI';
 import { FUEL_TYPES } from '../../src/constants';
 export default function VehicleForm() {
-  const { id } = useLocalSearchParams(); const { vehicles, fuel, mutate } = useApp();
+  const { id } = useLocalSearchParams(); const { vehicles, fuel, services, mutate } = useApp();
   const original = vehicles.find(v => v.id === Number(id));
   const [form, setForm] = useState(original || { nickname: '', registration_no: '', make: '', model: '', year: String(new Date().getFullYear()), fuel_type: 'Petrol', current_mileage: '', image_uri: null });
   const [error, setError] = useState(''), [busy, setBusy] = useState(false);
@@ -28,8 +28,8 @@ export default function VehicleForm() {
   async function save() {
     setError(''); setBusy(true);
     try {
-      const maximum = Math.max(0, ...fuel.filter(r => r.vehicle_id === Number(id)).map(r => r.odometer));
-      if (Number(form.current_mileage) < maximum) throw new Error('Mileage cannot be lower than a recorded fuel odometer.');
+      const maximum = Math.max(0, ...fuel.filter(r => r.vehicle_id === Number(id)).map(r => r.odometer), ...services.filter(r => r.vehicle_id === Number(id)).map(r => r.mileage));
+      if (Number(form.current_mileage) < maximum) throw new Error('Mileage cannot be lower than an existing service or fuel record.');
       await mutate('vehicles', 'save', form, id); router.back();
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   }
